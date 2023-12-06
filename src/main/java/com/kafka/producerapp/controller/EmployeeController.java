@@ -2,6 +2,7 @@ package com.kafka.producerapp.controller;
 
 
 import com.kafka.producerapp.EmployeePersonalDetails;
+import com.kafka.producerapp.producer.EmployeeDetailTemplate;
 import com.kafka.producerapp.producer.EmployeePersonalDetailProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class EmployeeController {
 
     @Autowired
     private EmployeePersonalDetailProducer employeePersonaldetailProducer;
+    @Autowired
+    private EmployeeDetailTemplate employeeDetailTemplate;
 
 
 
@@ -32,8 +35,23 @@ public class EmployeeController {
 //                .setLastname(request.getLastname()).setAge(request.getAge())
 //                .setSex(request.getSex())
 //                .build();
-        this.employeePersonaldetailProducer.setEmployeePersonaldetail(request);
         logger.info("employeepersonal request:",String.valueOf(request));
+        this.employeePersonaldetailProducer.setEmployeePersonaldetail(request);
+
+
+    }
+
+    @PostMapping(value = "/employeepersonalrequest")
+    public void sendMessage(@RequestBody EmployeePersonalDetails request) throws ExecutionException, InterruptedException {
+        EmployeePersonalDetails employeeDetail =   EmployeePersonalDetails.newBuilder()
+                .setEmployeeId(request.getEmployeeId())
+                .setFirstname(request.getFirstname())
+                .setLastname(request.getLastname()).setAge(request.getAge())
+                .setSex(request.getSex())
+                .build();
+        logger.info("employeepersonal Template request:",String.valueOf(employeeDetail));
+        this.employeeDetailTemplate.sendMessageToKafka(employeeDetail);
+
 
     }
 

@@ -5,23 +5,23 @@
   "fields": [
     {
       "name": "employeeId",
-      "type":  [ "int", "null" ], "default": "null"
+      "type":  [ "int", "null" ]
     },
     {
       "name": "firstname",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ]
     },
     {
       "name": "lastname",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ]
     },
     {
       "name": "age",
-      "type":  [ "int", "null" ], "default": "null"
+      "type":  [ "int", "null" ]
     },
     {
       "name": "sex",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ]
     }
   ]
 }

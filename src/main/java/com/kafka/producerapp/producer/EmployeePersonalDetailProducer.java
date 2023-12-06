@@ -25,10 +25,10 @@ public class EmployeePersonalDetailProducer {
 
         // create Producer properties
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers","127.0.0.1:9092");
-        properties.setProperty("key.serializer", StringSerializer.class.getName());
-        properties.setProperty("value.serializer", KafkaAvroSerializer.class.getName());
-        properties.setProperty("schema.registry.url","http://localhost:8080");
+        properties.put("bootstrap.servers","127.0.0.1:9092");
+        properties.put("key.serializer", StringSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
+        properties.put("schema.registry.url","http://localhost:8081");
         final KafkaProducer<String, EmployeePersonalDetails> producer=new KafkaProducer<String, EmployeePersonalDetails>(properties);
         EmployeePersonalDetails employeePersonalDetail= EmployeePersonalDetails.newBuilder().setFirstname(employeePersonaldetailRequest.getFirstname()).setEmployeeId(employeePersonaldetailRequest.getEmployeeId()).setAge(employeePersonaldetailRequest.getAge()).setLastname(employeePersonaldetailRequest.getLastname()).setSex(employeePersonaldetailRequest.getSex()).build();
         System.out.println("Printing employeePersonalDetail after value setting:"+ employeePersonalDetail.toString());
@@ -37,7 +37,25 @@ public class EmployeePersonalDetailProducer {
                 String.valueOf(employeePersonalDetail.getEmployeeId()), employeePersonalDetail);
         logger.info("record printing",String.valueOf(record));
         System.out.println("Printing employeePersonalDetail Record:"+record);
-        producer.send(record).get();
+//        producer.send(record).get();
+
+        producer.send(record, new Callback() {
+            public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                Logger logger=LoggerFactory.getLogger(EmployeePersonalDetailProducer.class);
+                if (e== null) {
+                    logger.info("Successfully received the details as: \n" +
+                            "Topic:" + recordMetadata.topic() + "\n" +
+                            "Partition:" + recordMetadata.partition() + "\n" +
+                            "Offset" + recordMetadata.offset() + "\n" +
+                            "Timestamp" + recordMetadata.timestamp());
+                }
+
+                else {
+                    logger.error("Can't produce,getting error",e);
+
+                }
+            }
+        });
 
 
 

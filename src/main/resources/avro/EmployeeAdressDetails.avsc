@@ -5,23 +5,23 @@
   "fields": [
     {
       "name": "employeeId",
-      "type":  [ "int", "null" ], "default": "null"
+      "type":  [ "int", "null" ], "default": null
     },
     {
       "name": "housename",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ], "default": null
     },
     {
       "name": "streetname",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ], "default": null
     },
     {
       "name": "city",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ], "default": null
     },
     {
       "name": "postcode",
-      "type":  [ "string", "null" ], "default": "null"
+      "type":  [ "string", "null" ], "default": null
     }
   ]
 }

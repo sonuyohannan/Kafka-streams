@@ -1,7 +1,9 @@
 package com.kafka.producerapp.consumer;
 
 import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
+import com.kafka.producerapp.EmployeeAdressDetails;
 import com.kafka.producerapp.EmployeePersonalDetails;
+import com.kafka.producerapp.EmployeeVehicleDetails;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -25,7 +27,7 @@ public class EmployeePersonalDetailConsumer {
         properties.setProperty("group.id",groupId);
 
         KafkaConsumer<String, EmployeePersonalDetails> consumer=new KafkaConsumer<>(properties);
-        consumer.subscribe(Arrays.asList("EmployeePersonalDetails"));
+        consumer.subscribe(Arrays.asList("EmployeePersonalDetails", "EmployeeAdressDetails", "EmployeeVehicleDetails"));
         while(true) {
             ConsumerRecords<String, EmployeePersonalDetails> record = consumer.poll(Duration.ofMillis(1000));
             for(ConsumerRecord<String,EmployeePersonalDetails> records: record){

@@ -30,6 +30,11 @@
     {
       "name": "state",
       "type":  [ "string", "null" ]
+    },
+
+    {
+      "name": "district",
+      "type":  [ "string", "null" ]
     }
   ]
 }

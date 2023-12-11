@@ -15,28 +15,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 @Configuration
-public class KafkaProducerConfig {
-@Bean
-public ProducerFactory<String, EmployeePersonalDetails> employeePersonalDetailsProducerFactory() {
+public class  KafkaProducerConfig {
+    @Bean(name = "employee-personal")
+    public ProducerFactory<String, EmployeePersonalDetails> employeePersonalDetailsProducerFactory() {
         Map<String, Object> configProps = producerConfigProperties();
         return new DefaultKafkaProducerFactory<>(configProps);
         }
 
-    @Bean
+    @Bean(name = "employee-vehicle")
     public ProducerFactory<String, EmployeeVehicleDetails> employeePersonalVehicleProducerFactory() {
         Map<String, Object> configProps = producerConfigProperties();
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
-    @Bean
+    @Bean(name = "employee-address")
     public ProducerFactory<String, EmployeeAdressDetails> employeePersonalAddressProducerFactory() {
         Map<String, Object> configProps = producerConfigProperties();
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
 
-
-private Map<String, Object> producerConfigProperties() {
+@Bean
+public Map<String, Object> producerConfigProperties() {
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
